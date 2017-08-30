@@ -37,29 +37,29 @@ pip install dist/*.whl
 ### Get started
 To record audio and search keyword "snowboy", see also [`kws_snowboy.py`](voice_engine/kws_snowboy.py)
 
-    ```python
-    import time
-    from voice_engine.kws import KWS
-    from voice_engine.source import Source
+```python
+import time
+from voice_engine.kws import KWS
+from voice_engine.source import Source
 
-    src = Source()
-    kws = KWS()
-    src.link(kws)
+src = Source()
+kws = KWS()
+src.link(kws)
 
-    def on_detected(keyword):
-        print('found {}'.format(keyword))
-    kws.on_detected = on_detected
+def on_detected(keyword):
+    print('found {}'.format(keyword))
+kws.on_detected = on_detected
 
-    kws.start()
-    src.start()
-    while True:
-        try:
-            time.sleep(1)
-        except KeyboardInterrupt:
-            break
-    kws.stop()
-    src.stop()
-    ```
+kws.start()
+src.start()
+while True:
+    try:
+        time.sleep(1)
+    except KeyboardInterrupt:
+        break
+kws.stop()
+src.stop()
+```
     
 ### Building blocks
 The library uses gstreamer-like [elements](voice_engine/element.py) which can be linked together as an audio pipeline.
@@ -67,9 +67,9 @@ One element can connect to more than one other elements.
 
 The topology can be:
 ```
-Source --> ChannelPicker --> KWS        Source --> ChannelPicker --> KWS --> Alexa
+Source --> ChannelPicker --> KWS          Source --> ChannelPicker --> KWS --> Alexa
   |                          /\
   V                        /   \
- DOA           Alexa   Google Asissitant 
+ DOA                   Alexa   Google Asissitant 
   
 ```
