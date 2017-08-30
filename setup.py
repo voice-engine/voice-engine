@@ -12,7 +12,7 @@ The library includes building blocks to create voice interface applications
 
 
 requirements = [
-    'pyaudio'
+    # 'pyaudio'   # not included for ci
 ]
 
 setup_requirements = [
