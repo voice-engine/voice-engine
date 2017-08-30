@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 README = \
 '''
-
+The library includes building blocks to create voice interface applications
 '''
 
 
@@ -20,7 +20,7 @@ setup_requirements = [
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
+    'pytest'
 ]
 
 setup(

@@ -1,5 +1,9 @@
+before_install:
+- sudo apt-get -qq update
+- sudo apt-get install -qq python-pyaudio
 deploy:
   true:
+    python: 2.7
     branch: master
     tags: true
   distributions: sdist bdist_wheel
