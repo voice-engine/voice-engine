@@ -2,6 +2,7 @@ Voice Engine
 ============
 
 [![Build Status](https://travis-ci.org/voice-engine/voice-engine.svg?branch=master)](https://travis-ci.org/voice-engine/voice-engine)
+[![](https://img.shields.io/pypi/v/voice-engine.svg)](https://pypi.python.org/pypi/voice-engine)
 
 
 The library is used to create voice interface applications.
