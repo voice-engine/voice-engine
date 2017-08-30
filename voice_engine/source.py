@@ -10,12 +10,12 @@ logger = logging.getLogger(__file__)
 
 
 class Source(Element):
-    def __init__(self, rate=16000, chunk_size=None, channels=None, device_index=None):
+    def __init__(self, rate=16000, frames_size=None, channels=None, device_index=None):
 
         super(Source, self).__init__()
 
         self.sample_rate = rate
-        self.chunk_size = chunk_size if chunk_size else rate / 100
+        self.frames_size = frames_size if frames_size else rate / 100
         self.channels = channels if channels else 1
 
         self.pyaudio_instance = pyaudio.PyAudio()
@@ -34,7 +34,7 @@ class Source(Element):
                 device_index = self.pyaudio_instance.get_default_input_device_info()['index']
 
             if device_index is None:
-                raise Exception('Can not find an input device with {} channel(s)'.format(channels))
+                raise ValueError('Can not find an input device with {} channel(s)'.format(channels))
 
         self.stream = self.pyaudio_instance.open(
             start=False,
@@ -42,7 +42,7 @@ class Source(Element):
             input_device_index=device_index,
             channels=self.channels,
             rate=int(self.sample_rate),
-            frames_per_buffer=int(self.chunk_size),
+            frames_per_buffer=int(self.frames_size),
             stream_callback=self._callback,
             input=True
         )
