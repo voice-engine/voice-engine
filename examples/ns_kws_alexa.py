@@ -1,5 +1,5 @@
 """
-Hands-free Voice Assistant with Snowboy and Alexa Voice Service. The wake-up keyword is "snowboy"
+Hands-free Voice Assistant with Snowboy and Alexa Voice Service. The wake-up keyword is "alexa"
 
 Requirement:
     pip install webrtc-audio-processing
@@ -21,7 +21,7 @@ def main():
     src = Source(rate=16000)
     ns = NS(rate=16000, channels=1)
     kws = KWS()
-    alexa = Alexa()
+    alexa = Alexa(model='alexa')
 
     src.link(ns)
     ns.link(kws)

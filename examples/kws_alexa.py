@@ -1,5 +1,5 @@
 """
-Hands-free Voice Assistant with Snowboy and Alexa Voice Service. The wake-up keyword is "snowboy"
+Hands-free Voice Assistant with Snowboy and Alexa Voice Service. The wake-up keyword is "alexa"
 
 Requirement:
     pip install avs
@@ -17,7 +17,7 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     src = Source(rate=16000)
-    kws = KWS()
+    kws = KWS(model='alexa')
     alexa = Alexa()
 
     src.link(kws)
