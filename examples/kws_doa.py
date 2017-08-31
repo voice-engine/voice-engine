@@ -25,7 +25,7 @@ def main():
     src.link(doa)
 
     def on_detected(keyword):
-        print('detected {} at direction {}', keyword, doa.get_direction())
+        print('detected {} at direction {}'.format(keyword, doa.get_direction()))
 
     kws.set_callback(on_detected)
 
