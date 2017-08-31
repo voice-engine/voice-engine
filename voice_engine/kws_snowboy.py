@@ -17,8 +17,17 @@ from .element import Element
 
 
 class KWS(Element):
-    def __init__(self):
+    def __init__(self, model='snowboy'):
         super(KWS, self).__init__()
+
+        resource_path = os.path.join(os.path.dirname(snowboydetect.__file__), 'resources')
+        common_resource = os.path.join(resource_path, 'common.res')
+        if model in ['alexa', 'snowboy']:
+            model = os.path.join(resource_path, '{}.umdl'.format(model))
+        self.detector = snowboydetect.SnowboyDetect(common_resource, model)
+        self.detector.SetAudioGain(1)
+        self.detector.ApplyFrontend(True)
+        self.detector.SetSensitivity('0.6'.encode())
 
         self.queue = queue.Queue()
         self.done = False
@@ -38,17 +47,11 @@ class KWS(Element):
         self.done = True
 
     def run(self):
-        resource_path = os.path.join(os.path.dirname(snowboydetect.__file__), 'resources')
-        detector = snowboydetect.SnowboyDetect(
-            os.path.join(resource_path, 'common.res'),
-            os.path.join(resource_path, 'snowboy.umdl'))
-        detector.SetAudioGain(1)
-        detector.ApplyFrontend(True)
-        detector.SetSensitivity('0.6'.encode())
+
 
         while not self.done:
             data = self.queue.get()
-            ans = detector.RunDetection(data)
+            ans = self.detector.RunDetection(data)
             if ans > 0:
                 if callable(self.on_detected):
                     self.on_detected(ans)
