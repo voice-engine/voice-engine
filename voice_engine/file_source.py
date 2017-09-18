@@ -15,8 +15,8 @@ class Source(Element):
         super(Source, self).__init__()
 
         self._wav = wave.open(wav, 'r')
-
         self.channels = self._wav.getnchannels()
+        self.rate = self._wav.getframerate()
         self.frames_size = frames_size
         self.done = False
 
@@ -24,8 +24,9 @@ class Source(Element):
         while not self.done:
             frames = self._wav.readframes(self.frames_size)
             if not frames:
-                self._wav.rewind()
-                continue
+                # self._wav.rewind()
+                # continue
+                break
 
             super(Source, self).put(frames)
 
@@ -38,3 +39,6 @@ class Source(Element):
 
     def stop(self):
         self.done = True
+
+    def is_active(self):
+        return not self.done
