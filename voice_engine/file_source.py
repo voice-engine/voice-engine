@@ -26,7 +26,12 @@ class Source(Element):
             if not frames:
                 # self._wav.rewind()
                 # continue
+
+                self.done = True
                 break
+            else:
+                frames_bytes = self._wav.getsampwidth() * self.channels * self.frames_size
+                frames = frames.rjust(frames_bytes)
 
             super(Source, self).put(frames)
 
