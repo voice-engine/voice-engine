@@ -51,6 +51,8 @@ class DOA(Element):
             else:
                 best_guess = (180 - theta[1])
 
-            best_guess = (best_guess + 90) % 360
+            best_guess = (best_guess + 270) % 360
+
+        best_guess = (-best_guess + 120) % 360
 
         return best_guess
