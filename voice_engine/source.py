@@ -14,7 +14,7 @@ class Source(Element):
 
         super(Source, self).__init__()
 
-        self.sample_rate = rate
+        self.rate = rate
         self.frames_size = frames_size if frames_size else rate / 100
         self.channels = channels if channels else 1
 
@@ -41,7 +41,7 @@ class Source(Element):
             format=pyaudio.paInt16,
             input_device_index=device_index,
             channels=self.channels,
-            rate=int(self.sample_rate),
+            rate=int(self.rate),
             frames_per_buffer=int(self.frames_size),
             stream_callback=self._callback,
             input=True
