@@ -5,7 +5,7 @@
 import numpy as np
 
 
-def gcc_phat(sig, refsig, fs=1, max_tau=None, interp=16):
+def gcc_phat(sig, refsig, fs=1, max_tau=None, interp=1):
     '''
     This function computes the offset between the signal sig and the reference signal refsig
     using the Generalized Cross Correlation - Phase Transform (GCC-PHAT)method.
