@@ -17,10 +17,10 @@ MAX_TDOA_6P1 = MIC_DISTANCE_6P1 / float(SOUND_SPEED)
 
 
 class DOA(Element):
-    def __init__(self, rate=16000):
+    def __init__(self, rate=16000, chunks=10):
         super(DOA, self).__init__()
 
-        self.queue = collections.deque(maxlen=64)
+        self.queue = collections.deque(maxlen=chunks)
         self.sample_rate = rate
 
         self.pair = [[1, 4], [2, 5], [3, 6]]
