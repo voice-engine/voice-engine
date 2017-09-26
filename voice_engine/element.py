@@ -41,11 +41,10 @@ class Element(object):
 
     def recursive_stop(self):
         def recursive_stop_sink(s):
-            # stop downstream first
+            # stop upstream first
+            s.stop()
             if hasattr(s, 'sinks'):
                 for sink in s.sinks:
                     recursive_stop_sink(sink)
-
-            s.stop()
 
         recursive_stop_sink(self)
