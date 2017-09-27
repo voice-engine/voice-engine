@@ -31,13 +31,16 @@ def main():
     kws.set_callback(on_detected)
 
     src.recursive_start()
-    while True:
+    while src.is_active():
         try:
             time.sleep(1)
         except KeyboardInterrupt:
             break
 
     src.recursive_stop()
+
+    # wait a second to allow other threads to exit
+    time.sleep(1)
 
 
 if __name__ == '__main__':
