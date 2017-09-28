@@ -3,16 +3,17 @@
 """
 Delay & Sum beamforming
 """
-
-import numpy as np
+import sys
 import threading
-try:
+if sys.version_info[0] < 3:
     import Queue as queue
-except ImportError:
+else:
     import queue
 
-from voice_engine.element import Element
-from voice_engine.gcc_phat import gcc_phat
+import numpy as np
+
+from .element import Element
+from .gcc_phat import gcc_phat
 
 
 class DelaySum(Element):

@@ -5,10 +5,11 @@ Keyword spotting using snowboy
 """
 
 import os
+import sys
 import threading
-try:
+if sys.version_info[0] < 3:
     import Queue as queue
-except ImportError:
+else:
     import queue
 
 from snowboy import snowboydetect
