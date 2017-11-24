@@ -28,7 +28,15 @@ class Element(object):
     def unlink(self, sink):
         self.sinks.remove(sink)
 
-    def recursive_start(self):
+    def pipeline(self, *args):
+        source = self
+        for sink in args:
+            source.link(sink)
+            source = sink
+
+        return self
+
+    def pipeline_start(self):
         def recursive_start_sink(s):
             # start downstream first
             if hasattr(s, 'sinks'):
@@ -39,7 +47,9 @@ class Element(object):
 
         recursive_start_sink(self)
 
-    def recursive_stop(self):
+    recursive_start = pipeline_start
+
+    def pipeline_stop(self):
         def recursive_stop_sink(s):
             # stop upstream first
             s.stop()
@@ -48,3 +58,5 @@ class Element(object):
                     recursive_stop_sink(sink)
 
         recursive_stop_sink(self)
+
+    recursive_stop = pipeline_stop
