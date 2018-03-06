@@ -25,7 +25,7 @@ test_requirements = [
 
 setup(
     name='voice-engine',
-    version='0.0.3',
+    version='0.0.4',
     description="Voice engine to build voice interaction applications",
     long_description=README,
     author="Yihui Xiong",
