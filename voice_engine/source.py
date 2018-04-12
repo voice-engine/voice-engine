@@ -10,8 +10,7 @@ logger = logging.getLogger(__file__)
 
 
 class Source(Element):
-    def __init__(self, rate=16000, frames_size=None, channels=None, device_index=None, bits_per_sample=16):
-
+    def __init__(self, rate=16000, frames_size=None, channels=None, device_name=None, bits_per_sample=16):
         super(Source, self).__init__()
 
         self.rate = rate
@@ -20,23 +19,23 @@ class Source(Element):
 
         self.pyaudio_instance = pyaudio.PyAudio()
 
-        format = pyaudio.get_format_from_width(bits_per_sample / 8)
+        formats = [pyaudio.paInt8, pyaudio.paInt16, pyaudio.paInt24, pyaudio.paInt32]
+        format = formats[bits_per_sample / 8 - 1]
+
+        if device_name:
+            for i in range(self.pyaudio_instance.get_device_count()):
+                dev = self.pyaudio_instance.get_device_info_by_index(i)
+                name = dev['name'].encode('utf-8')
+                logger.info('{}:{} with {} input channels'.format(i, name, dev['maxInputChannels']))
+                if name.find(device_name) >= 0:
+                    logger.info('Use {}'.format(name))
+                    device_index = i
+                    break
+        else:
+            device_index = self.pyaudio_instance.get_default_input_device_info()['index']
 
         if device_index is None:
-            if channels:
-                for i in range(self.pyaudio_instance.get_device_count()):
-                    dev = self.pyaudio_instance.get_device_info_by_index(i)
-                    name = dev['name'].encode('utf-8')
-                    logger.info('{}:{} with {} input channels'.format(i, name, dev['maxInputChannels']))
-                    if dev['maxInputChannels'] == channels:
-                        logger.info('Use {}'.format(name))
-                        device_index = i
-                        break
-            else:
-                device_index = self.pyaudio_instance.get_default_input_device_info()['index']
-
-            if device_index is None:
-                raise ValueError('Can not find an input device with {} channel(s)'.format(channels))
+            raise ValueError('Can not find an input device {}'.format(device_name))
 
         self.stream = self.pyaudio_instance.open(
             start=False,
