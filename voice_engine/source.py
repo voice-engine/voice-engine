@@ -10,7 +10,7 @@ logger = logging.getLogger(__file__)
 
 
 class Source(Element):
-    def __init__(self, rate=16000, frames_size=None, channels=None, device_index=None):
+    def __init__(self, rate=16000, frames_size=None, channels=None, device_index=None, bits_per_sample=16):
 
         super(Source, self).__init__()
 
@@ -19,6 +19,8 @@ class Source(Element):
         self.channels = channels if channels else 1
 
         self.pyaudio_instance = pyaudio.PyAudio()
+
+        format = pyaudio.get_format_from_width(bits_per_sample / 8)
 
         if device_index is None:
             if channels:
@@ -38,7 +40,7 @@ class Source(Element):
 
         self.stream = self.pyaudio_instance.open(
             start=False,
-            format=pyaudio.paInt16,
+            format=format,
             input_device_index=device_index,
             channels=self.channels,
             rate=int(self.rate),
