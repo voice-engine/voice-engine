@@ -38,12 +38,12 @@ class Element(object):
 
     def pipeline_start(self):
         def recursive_start_sink(s):
-            # start downstream first
-            if hasattr(s, 'sinks'):
-                for sink in s.sinks:
-                    recursive_start_sink(sink)
-
-            s.start()
+            if s:
+                # start downstream first
+                if hasattr(s, 'sinks'):
+                    for sink in s.sinks:
+                        recursive_start_sink(sink)
+                s.start()
 
         recursive_start_sink(self)
 
@@ -51,11 +51,12 @@ class Element(object):
 
     def pipeline_stop(self):
         def recursive_stop_sink(s):
-            # stop upstream first
-            s.stop()
-            if hasattr(s, 'sinks'):
-                for sink in s.sinks:
-                    recursive_stop_sink(sink)
+            if s:
+                # stop upstream first
+                s.stop()
+                if hasattr(s, 'sinks'):
+                    for sink in s.sinks:
+                        recursive_stop_sink(sink)
 
         recursive_stop_sink(self)
 
