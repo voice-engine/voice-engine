@@ -6,7 +6,7 @@ Voice Engine
 
 
 The library is used to create voice interface applications.
-It includes building blocks such as KWS (keyword spotting), DOA (Direction Of Arrival).
+It includes building blocks such as KWS (keyword spotting), DOA (Direction Of Arrival). There are also elements to measure RMS (dBFS or dB(A)).
 
 
 ### Requirements
