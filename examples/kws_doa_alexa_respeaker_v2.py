@@ -15,13 +15,18 @@ from voice_engine.source import Source
 from voice_engine.kws import KWS
 from voice_engine.channel_picker import ChannelPicker
 from voice_engine.doa_respeaker_v2_6mic_array import DOA
-from avs import Alexa
+from avs.alexa import Alexa
 from pixel_ring import pixel_ring
 import mraa
 
 power = mraa.Gpio(12)
+time.sleep(1)
 power.dir(mraa.DIR_OUT)
 power.write(0)
+
+pixel_ring.wakeup(0)
+time.sleep(1)
+pixel_ring.off()
 
 
 def main():
