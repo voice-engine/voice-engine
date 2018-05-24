@@ -47,7 +47,6 @@ def main():
 
     def on_detected(keyword):
         direction = doa.get_direction()
-        pixel_ring.wakeup(direction)
         print('detected {} at direction {}'.format(keyword, direction))
         alexa.listen()
         pixel_ring.wakeup(direction)
