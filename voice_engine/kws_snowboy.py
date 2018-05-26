@@ -23,15 +23,20 @@ class KWS(Element):
 
         resource_path = os.path.join(os.path.dirname(snowboydetect.__file__), 'resources')
         common_resource = os.path.join(resource_path, 'common.res')
-        if model in ['alexa', 'snowboy']:
-            model = os.path.join(resource_path, '{}.umdl'.format(model))
-        self.detector = snowboydetect.SnowboyDetect(common_resource, model)
+        
+        for model_path in [resource_path, os.path.join(resource_path, 'models')]:
+            builtin_model = os.path.join(model_path, '{}.umdl'.format(model))
+            if os.path.isfile(builtin_model):
+                model = builtin_model
+                break
+        self.detector = snowboydetect.SnowboyDetect(common_resource.encode(), model.encode())
         # self.detector.SetAudioGain(1)
         # self.detector.ApplyFrontend(True)
         self.detector.SetSensitivity(str(sensitivity).encode())
 
         self.queue = queue.Queue()
         self.done = False
+        self.thread = None
 
         self.on_detected = None
 
@@ -40,21 +45,29 @@ class KWS(Element):
 
     def start(self):
         self.done = False
-        thread = threading.Thread(target=self.run)
-        thread.daemon = True
-        thread.start()
+        self.thread = threading.Thread(target=self.run)
+        self.thread.daemon = True
+        self.thread.start()
 
     def stop(self):
         self.done = True
+        if self.thread and self.thread.is_alive():
+            self.thread.join(timeout=3)
 
     def run(self):
         while not self.done:
-            data = self.queue.get()
+            try:
+                data = self.queue.get(timeout=1)
+            except queue.Empty:
+                break
+
             ans = self.detector.RunDetection(data)
             if ans > 0:
                 if callable(self.on_detected):
                     self.on_detected(ans)
 
+            #sys.stdout.write(str(ans+2))
+            #sys.stdout.flush()
             super(KWS, self).put(data)
 
     def set_callback(self, callback):
