@@ -5,19 +5,13 @@
 
 from setuptools import setup, find_packages
 
-README = \
-'''
-The library includes building blocks to create voice interface applications
-'''
-
+with open('README.md') as f:
+    long_description = f.read()
 
 requirements = [
     # 'pyaudio'   # not included for ci
 ]
 
-setup_requirements = [
-    # TODO: put setup requirements (distutils extensions, etc.) here
-]
 
 test_requirements = [
     'pytest'
@@ -25,9 +19,10 @@ test_requirements = [
 
 setup(
     name='voice-engine',
-    version='0.1.0',
-    description="Voice engine to build voice interaction applications",
-    long_description=README,
+    version='0.1.1',
+    description="Voice engine to build voice enabled applications",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author="Yihui Xiong",
     author_email='yihui.xiong@hotmail.com',
     url='https://github.com/voice-engine/voice-engine',
@@ -53,6 +48,5 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     test_suite='tests',
-    tests_require=test_requirements,
-    setup_requires=setup_requirements,
+    tests_require=test_requirements
 )
