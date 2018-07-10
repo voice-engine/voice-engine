@@ -4,8 +4,8 @@
 WebRTC Voice Activity Detector (VAD)
 """
 
-import sys
 from webrtcvad import Vad
+
 from .element import Element
 
 
@@ -34,4 +34,3 @@ class VAD(Element):
 
     def on_inactive(self, cb):
         self.on_inactive = cb
-

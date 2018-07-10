@@ -5,6 +5,7 @@ Delay & Sum beamforming
 """
 import sys
 import threading
+
 if sys.version_info[0] < 3:
     import Queue as queue
 else:

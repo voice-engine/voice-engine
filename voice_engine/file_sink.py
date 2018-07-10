@@ -1,5 +1,3 @@
-
-
 # -*- coding: utf-8 -*-
 
 """
@@ -7,6 +5,7 @@ Save audio to file
 """
 
 import wave
+
 from .element import Element
 
 

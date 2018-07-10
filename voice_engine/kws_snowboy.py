@@ -7,6 +7,7 @@ Keyword spotting using snowboy
 import os
 import sys
 import threading
+
 if sys.version_info[0] < 3:
     import Queue as queue
 else:
@@ -23,7 +24,7 @@ class KWS(Element):
 
         resource_path = os.path.join(os.path.dirname(snowboydetect.__file__), 'resources')
         common_resource = os.path.join(resource_path, 'common.res')
-        
+
         for model_path in [resource_path, os.path.join(resource_path, 'models')]:
             builtin_model = os.path.join(model_path, '{}.umdl'.format(model))
             if os.path.isfile(builtin_model):
@@ -66,8 +67,8 @@ class KWS(Element):
                 if callable(self.on_detected):
                     self.on_detected(ans)
 
-            #sys.stdout.write(str(ans+2))
-            #sys.stdout.flush()
+            # sys.stdout.write(str(ans+2))
+            # sys.stdout.flush()
             super(KWS, self).put(data)
 
     def set_callback(self, callback):

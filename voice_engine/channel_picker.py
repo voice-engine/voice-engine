@@ -5,6 +5,7 @@ Select channel 0 from multiple channels
 """
 
 import numpy as np
+
 from .element import Element
 
 
@@ -18,4 +19,3 @@ class ChannelPicker(Element):
         data = np.fromstring(data, dtype='int16')
         data = data[self.pick::self.channels].tostring()
         super(ChannelPicker, self).put(data)
-

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+"""Audio source that reads raw audio file"""
 
 import logging
 import threading

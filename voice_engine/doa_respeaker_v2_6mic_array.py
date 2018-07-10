@@ -4,11 +4,12 @@
 Time Difference of Arrival for ReSpeaker V2 6mic array
 """
 
-import numpy as np
 import collections
-from voice_engine.gcc_phat import gcc_phat
-from voice_engine.element import Element
 
+import numpy as np
+
+from voice_engine.element import Element
+from voice_engine.gcc_phat import gcc_phat
 
 SOUND_SPEED = 340.0
 

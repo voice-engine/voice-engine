@@ -6,6 +6,7 @@ EC (Echo Canceller)
 Playback is captured at one of mic array channels
 """
 import sys
+
 if sys.version_info[0] < 3:
     import Queue as queue
 else:
@@ -70,7 +71,7 @@ def main():
 
     src.pipeline(ec)
     src.pipeline_start()
-    
+
     while True:
         try:
             time.sleep(1)

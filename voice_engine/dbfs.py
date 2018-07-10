@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+
 from voice_engine.element import Element
 
 
@@ -10,10 +11,10 @@ class DBFS(Element):
         self.channels = channels
         if bits_per_sample == 32:
             self.type = 'int32'
-            self.top = 20 * np.log10(2**31 - 1)
+            self.top = 20 * np.log10(2 ** 31 - 1)
         else:
             self.type = 'int16'
-            self.top = 20 * np.log10(2**15 - 1)
+            self.top = 20 * np.log10(2 ** 15 - 1)
 
     def put(self, data):
         buf = np.fromstring(data, dtype=self.type)

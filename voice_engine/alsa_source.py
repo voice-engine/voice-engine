@@ -1,13 +1,28 @@
 # -*- coding: utf-8 -*-
+"""Audio source using ALSA `arecord`"""
 
-import os
 import subprocess
 import threading
-from .element import Element
+
+from voice_engine.element import Element
 
 
 class Source(Element):
+    """Audio source that records audio using `arecord`
+
+    `arecord` is spawned to write audio to the stdout pipe, and then record audio from the stdout pipe
+    """
+
     def __init__(self, rate=16000, frames_size=None, channels=1, device_name='default', bits_per_sample=16):
+        """Set parameters of recording
+
+        Args:
+            rate: sample rate
+            frames_size: number of each channel's frames per chunk
+            channels: channels' number
+            device_name: ALSA PCM name, using `arecord -L` to get a list of PCM names
+            bits_per_sample: sample width, 16 or 32
+        """
         super(Source, self).__init__()
 
         self.rate = rate
@@ -19,6 +34,7 @@ class Source(Element):
         self.thread = None
 
     def run(self):
+        """Run `arecord` and read its stdout pipe"""
         cmd = [
             'arecord',
             '-t', 'raw',
@@ -39,13 +55,14 @@ class Source(Element):
         process.kill()
 
     def start(self):
+        """Start a recording thread"""
         self.done = False
         self.thread = threading.Thread(target=self.run)
         self.thread.daemon = True
         self.thread.start()
 
     def stop(self):
+        """Stop recording"""
         self.done = True
         if self.thread and self.thread.is_alive():
             self.thread.join(timeout=3)
-

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+"""Audio source using pyaudio"""
 
-
-import pyaudio
 import logging
+import pyaudio
 
 from .element import Element
 
@@ -11,6 +11,15 @@ logger = logging.getLogger(__file__)
 
 class Source(Element):
     def __init__(self, rate=16000, frames_size=None, channels=None, device_name=None, bits_per_sample=16):
+        """Setup a pyaudio callback stream to record audio
+
+        Args:
+            rate: sample rate
+            frames_size: number of each channel's frames per chunk
+            channels: channels' number
+            device_name: device name to search
+            bits_per_sample: sample width - 8, 16, 24 or 32
+        """
         super(Source, self).__init__()
 
         self.rate = rate
@@ -20,8 +29,9 @@ class Source(Element):
         self.pyaudio_instance = pyaudio.PyAudio()
 
         formats = [pyaudio.paInt8, pyaudio.paInt16, pyaudio.paInt24, pyaudio.paInt32]
-        format = formats[bits_per_sample / 8 - 1]
+        width = formats[bits_per_sample / 8 - 1]
 
+        # Search device by name
         if device_name:
             for i in range(self.pyaudio_instance.get_device_count()):
                 dev = self.pyaudio_instance.get_device_info_by_index(i)
@@ -39,7 +49,7 @@ class Source(Element):
 
         self.stream = self.pyaudio_instance.open(
             start=False,
-            format=format,
+            format=width,
             input_device_index=device_index,
             channels=self.channels,
             rate=int(self.rate),
@@ -49,6 +59,7 @@ class Source(Element):
         )
 
     def _callback(self, in_data, frame_count, time_info, status):
+        """pyaudio stream callback"""
         super(Source, self).put(in_data)
 
         return None, pyaudio.paContinue

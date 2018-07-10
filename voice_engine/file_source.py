@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-
+"""Audio source that reads .wav file"""
 
 import logging
-import wave
 import threading
+import wave
 
 from .element import Element
 

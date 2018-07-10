@@ -4,11 +4,12 @@
 Time Difference of Arrival for ReSpeaker 4 Mic Array
 """
 
-import numpy as np
 import collections
-from .gcc_phat import gcc_phat
-from .element import Element
 
+import numpy as np
+
+from .element import Element
+from .gcc_phat import gcc_phat
 
 SOUND_SPEED = 340.0
 
