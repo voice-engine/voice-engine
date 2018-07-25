@@ -11,7 +11,7 @@ from voice_engine.source import Source
 from voice_engine.channel_picker import ChannelPicker
 from voice_engine.ns import NS
 from voice_engine.kws import KWS
-from voice_engine.doa_respeaker_4mic_hat import DOA
+from voice_engine.doa_respeaker_4mic_array import DOA
 from pixel_ring import pixel_ring
 from gpiozero import LED
 from avs.alexa import Alexa

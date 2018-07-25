@@ -11,6 +11,7 @@ from voice_engine.ns import NS
 from voice_engine.kws import KWS
 from voice_engine.doa_respeaker_2mic_hat import DOA
 from pixel_ring import pixel_ring
+from avs.alexa import Alexa
 
 
 def main():
