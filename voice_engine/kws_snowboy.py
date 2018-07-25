@@ -19,8 +19,10 @@ from .element import Element
 
 
 class KWS(Element):
-    def __init__(self, model='snowboy', sensitivity=0.5):
+    def __init__(self, model='snowboy', sensitivity=0.5, verbose=True):
         super(KWS, self).__init__()
+
+        self.verbose = verbose
 
         resource_path = os.path.join(os.path.dirname(snowboydetect.__file__), 'resources')
         common_resource = os.path.join(resource_path, 'common.res')
@@ -30,6 +32,10 @@ class KWS(Element):
             if os.path.isfile(builtin_model):
                 model = builtin_model
                 break
+        if model == 'alexa':
+            alexa_model = os.path.join(resource_path, 'alexa', 'alexa_02092017.umdl')
+            if os.path.isfile(alexa_model):
+                model = alexa_model
         self.detector = snowboydetect.SnowboyDetect(common_resource.encode(), model.encode())
         # self.detector.SetAudioGain(1)
         # self.detector.ApplyFrontend(True)
@@ -67,8 +73,9 @@ class KWS(Element):
                 if callable(self.on_detected):
                     self.on_detected(ans)
 
-            # sys.stdout.write(str(ans+2))
-            # sys.stdout.flush()
+            if self.verbose:
+                sys.stdout.write(str(ans+2))
+                sys.stdout.flush()
             super(KWS, self).put(data)
 
     def set_callback(self, callback):
