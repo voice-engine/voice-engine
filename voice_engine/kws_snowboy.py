@@ -19,7 +19,7 @@ from .element import Element
 
 
 class KWS(Element):
-    def __init__(self, model='snowboy', sensitivity=0.5, verbose=True):
+    def __init__(self, model='snowboy', sensitivity=0.5, verbose=False):
         super(KWS, self).__init__()
 
         self.verbose = verbose
