@@ -19,7 +19,7 @@ test_requirements = [
 
 setup(
     name='voice-engine',
-    version='0.1.2',
+    version='0.1.3',
     description="Voice engine to build voice enabled applications",
     long_description=long_description,
     long_description_content_type='text/markdown',
