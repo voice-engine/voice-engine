@@ -23,7 +23,7 @@ class NS(Element):
 
     def put(self, data):
         self._buf += data
-        while len(self._buf) > self._bytes_10ms:
+        while len(self._buf) >= self._bytes_10ms:
             data = self._buf[:self._bytes_10ms]
             self._buf = self._buf[self._bytes_10ms:]
 
