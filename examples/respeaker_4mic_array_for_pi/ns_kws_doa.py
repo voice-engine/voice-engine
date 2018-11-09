@@ -20,7 +20,7 @@ power.on()
 
 
 def main():
-    src = Source(rate=16000, frames_size=160, channels=2)
+    src = Source(rate=16000, frames_size=160, channels=4)
     ch0 = ChannelPicker(channels=src.channels, pick=0)
     ns = NS(rate=src.rate, channels=1)
     kws = KWS()
