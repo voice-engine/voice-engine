@@ -44,7 +44,7 @@ class EC(Element):
         self.done = True
 
     def run(self):
-        data = ''
+        data = b''
         frames_bytes = self.frames_size * self.channels * 2
         while not self.done:
             data += self.queue.get()
